@@ -1,0 +1,5 @@
+# append this to the end of /etc/rc.local
+
+python /home/rpi/rotary_tracks.py &
+python /home/rpi/toggle_restart.py &
+python /home/rpi/toggle_shutdown.py &
