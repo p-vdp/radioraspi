@@ -34,7 +34,7 @@ try:
 
         if samples < wait * 80:
             print("no action, wait\n")
-            sleep(2.0)
+            sleep(1.0)
         else:
             command(cmd)
             break
