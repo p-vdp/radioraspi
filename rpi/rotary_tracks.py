@@ -5,8 +5,8 @@ from RPi import GPIO
 
 
 debounce = 0.01  # seconds
-clk = 27
-dt = 17
+clk = 5
+dt = 6
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -33,9 +33,9 @@ try:
 
         # do mpd command
         if rotation_direction:
+            client = MPDClient()
             try:
                 # print(counter, rotation_direction)
-                client = MPDClient()
                 client.connect("localhost", 6600)
                 status = client.status()
                 # print(status['playlistlength'], status['song'])

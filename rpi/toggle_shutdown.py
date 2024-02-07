@@ -9,7 +9,7 @@ def command(cmd):
     system(cmd)
 
 
-reset_sw = 16
+# reset_sw = 16
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(reset_sw, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
