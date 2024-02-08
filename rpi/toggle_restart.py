@@ -3,6 +3,8 @@ from time import sleep
 
 from RPi import GPIO
 
+from bulbs import Bulbs
+
 
 def command(cmd):
     print(cmd)
@@ -36,6 +38,8 @@ try:
             print("no action, wait\n")
             sleep(1.0)
         else:
+            b = Bulbs(12)
+            b.blink(repeat=2)
             command(cmd)
             break
 finally:
