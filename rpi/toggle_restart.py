@@ -38,7 +38,7 @@ try:
             print("no action, wait\n")
             sleep(1.0)
         else:
-            b = Bulbs(12)
+            b = Bulbs(12, mode="nc")
             b.blink(repeat=2)
             command(cmd)
             break

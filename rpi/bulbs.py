@@ -6,9 +6,12 @@ GPIO.setmode(GPIO.BCM)
 
 
 class Bulbs:
-    def __init__(self, gpin, init_on=True):
+    def __init__(self, gpin, mode, init_on=True):
         self.gpin = gpin
         self.init_on = init_on
+        self.mode = mode
+        if self.mode not in ["no", "nc"]:
+            raise ValueError("must be no normally open or nc normally closed")
 
         GPIO.setup(gpin, GPIO.OUT)
         self.initialize()
@@ -64,10 +67,16 @@ class Bulbs:
             self.off()
 
     def on(self):
-        GPIO.output(self.gpin, GPIO.LOW)
+        if self.mode == "nc":
+            GPIO.output(self.gpin, GPIO.LOW)
+        else:
+            GPIO.output(self.gpin, GPIO.HIGH)
 
     def off(self):
-        GPIO.output(self.gpin, GPIO.HIGH)
+        if self.mode == "nc":
+            GPIO.output(self.gpin, GPIO.HIGH)
+        else:
+            GPIO.output(self.gpin, GPIO.LOW)
 
     def toggle(self):
         if GPIO.input(self.gpin):  # NC relay means 1 is off
