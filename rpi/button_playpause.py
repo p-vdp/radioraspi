@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from time import sleep
 
 import gpiod
@@ -19,7 +21,7 @@ try:
         if button_state == 0:
             client.connect("localhost", 6600)
             status = client.status()
-            if status["state"] == "stop":
+            if status['state'] == 'stop':
                 client.play()
             else:
                 client.pause()
