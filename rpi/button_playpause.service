@@ -1,0 +1,27 @@
+# put this in /usr/lib/systemd/system/
+# then run
+# systemctl daemon-reload
+# systemctl enable button_playpause.service
+# systemctl start button_playpause.service
+# systemctl status button_playpause.service
+
+[Unit]
+Description=Volumio Backend Module
+Wants=dynamicswap.service
+
+StartLimitBurst=2
+StartLimitIntervalSec=5
+
+[Service]
+ExecStart=python3 /home/volumio/button_playpause.py
+#Restart=always
+Restart=on-failure
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=button_playpause
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
