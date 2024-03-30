@@ -1,25 +1,25 @@
 # put this in /usr/lib/systemd/system/
 # then run
 # systemctl daemon-reload
-# systemctl enable button_playpause.service
-# systemctl start button_playpause.service
-# systemctl status button_playpause.service
+# systemctl enable westinghouse.service
+# systemctl start westinghouse.service
+# systemctl status westinghouse.service
 
 [Unit]
-Description=Volumio Backend Module
+Description=Moode Backend Module
 Wants=dynamicswap.service
 
 StartLimitBurst=2
 StartLimitIntervalSec=5
 
 [Service]
-ExecStart=python3 /home/volumio/button_playpause.py
+ExecStart=python3 /home/rpi/westinghouse.py
 #Restart=always
 Restart=on-failure
 
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=button_playpause
+SyslogIdentifier=westinghouse
 User=root
 Group=root
 
