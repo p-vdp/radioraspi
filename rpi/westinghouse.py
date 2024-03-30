@@ -1,7 +1,7 @@
 from time import sleep
 
-import gpiod
-from mpd import MPDClient
+import gpiod  # noqa
+from mpd import MPDClient  # noqa
 
 
 def get_mpd_status(host="localhost", port=6600):
@@ -17,7 +17,7 @@ def get_mpd_status(host="localhost", port=6600):
 NC_PIN = 12
 NO_PIN = 17
 
-chip = gpiod.Chip('gpiochip4')
+chip = gpiod.Chip("gpiochip4")
 led_line = chip.get_line(NO_PIN)
 led_line.request(consumer="LED", type=gpiod.LINE_REQ_DIR_OUT)
 
