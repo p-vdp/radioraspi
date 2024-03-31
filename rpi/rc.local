@@ -1,7 +1,0 @@
-# append this to the end of /etc/rc.local
-
-# user scripts
-pinctrl set 23,24 ip  # left rotary encoder
-pinctrl set 4 ip  # left rotary encoder switch
-pinctrl set 5,6 ip  # right rotary encoder
-pinctrl set 25 ip  # right rotary switch
