@@ -69,6 +69,9 @@ class Gpio:
             event = self.line.event_read()
             return event
 
+    def get_value(self):
+        return self.line.get_value()
+
 
 def get_mpd_status(host="localhost", port=6600):
     client = MPDClient()

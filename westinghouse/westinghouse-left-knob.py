@@ -15,7 +15,7 @@ while True:
     try:
         client.connect("localhost", 6600)
         print("play/pause")
-        client.pause()
+        client.pause()  # noqa
         client.disconnect()
     except ConnectionRefusedError:
         print("Not connected")
