@@ -4,17 +4,20 @@ from mpd import MPDClient
 
 import utils
 
-
-right_knob = utils.Gpio(25, "wait")
+left_knob = utils.Gpio(25, "wait")
 
 client = MPDClient()
 
 while True:
-    right_knob.wait()
+    print("waiting")
+    left_knob.wait()
+    print("continuing")
     try:
         client.connect("localhost", 6600)
-        # cmd here
+        print("play/pause")
+        client.pause()
         client.disconnect()
     except ConnectionRefusedError:
         print("Not connected")
-    sleep(1)
+    print("sleeping")
+    sleep(3)
