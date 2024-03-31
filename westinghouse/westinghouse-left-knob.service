@@ -15,7 +15,7 @@ StartLimitIntervalSec=5
 
 [Service]
 ExecStart=python3 /home/rpi/westinghouse/westinghouse-left-knob.py
-Restart=on-failure
+Restart=always
 
 StandardOutput=syslog
 StandardError=syslog
