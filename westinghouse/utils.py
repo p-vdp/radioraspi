@@ -81,12 +81,3 @@ def get_mpd_status(host="localhost", port=6600):
         return True
     except ConnectionRefusedError:
         return False
-
-
-# # left rotary encoder
-# rot_left_1 = Gpio(23, "ip")
-# rot_left_2 = Gpio(24, "ip")
-
-# # right rotary encoder
-# rot_right_1 = Gpio(5, "ip")
-# rot_right_2 = Gpio(6, "ip")
