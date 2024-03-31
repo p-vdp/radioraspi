@@ -14,8 +14,7 @@ while True:
     print("continuing")
     try:
         client.connect("localhost", 6600)
-        # print("play/pause")  # TODO
-        # client.pause()
+        client.shuffle()
         client.disconnect()
     except ConnectionRefusedError:
         print("Not connected")
