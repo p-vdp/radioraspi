@@ -2,7 +2,6 @@ from time import sleep
 
 import utils
 
-# LED control
 led_closed = utils.Gpio(12, "op")
 led_open = utils.Gpio(17, "op")
 
@@ -13,6 +12,8 @@ try:
 
         if utils.get_mpd_status() is False:
             led_open.blink(1)
+        else:
+            sleep(1)
 finally:
     led_closed.off()
     led_open.off()

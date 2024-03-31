@@ -1,0 +1,27 @@
+# chmod +x this then put it in /usr/lib/systemd/system/
+# then run
+# systemctl daemon-reload
+# systemctl enable westinghouse-right-knob.service
+# systemctl start westinghouse-right-knob.service
+# systemctl status westinghouse-right-knob.service
+# journalctl -b -u westinghouse-right-knob
+
+[Unit]
+Description=westinghouse-right-knob
+Wants=dynamicswap.service
+
+StartLimitBurst=2
+StartLimitIntervalSec=5
+
+[Service]
+ExecStart=python3 /home/rpi/westinghouse/westinghouse-right-knob.py
+Restart=on-failure
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=westinghouse-right-knob
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
