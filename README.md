@@ -8,18 +8,16 @@ Modify `westinghouse.service` file line 9 to point to script location, default i
 
 Then run these commands:
 
-`sudo chmod +x westinghouse.service`
-
-`cp westinghouse.service /usr/lib/systemd/system/`
-
-`sudo systemctl daemon-reload`
-
-`sudo systemctl enable westinghouse.service`
-
-`sudo systemctl start westinghouse.service`
+    sudo chmod +x westinghouse.service
+    sudo cp westinghouse.service /usr/lib/systemd/system/
+    sudo systemctl daemon-reload
+    sudo systemctl enable westinghouse.service
+    sudo systemctl start westinghouse.service
 
 ## Monitoring
 
 `sudo systemctl status westinghouse.service`
+
+or
 
 `sudo journalctl -b -u westinghouse`
