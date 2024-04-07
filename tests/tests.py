@@ -62,12 +62,19 @@ class TestCases(unittest.TestCase):
             i += 1
             print("waiting for mpd to restart", i)
             response = westinghouse.mpd_is_alive()
-            sleep(0.1)
+            sleep(1)
 
         self.assertEqual(response, True)
 
+    def test_mpd_get_status(self):
+        status = westinghouse.mpd_get_status()
+        self.assertEqual(isinstance(status, dict), True)
+        print(status)
+
     def test_mpd_toggle_pause(self):
-        pass
+        westinghouse.mpd_toggle_pause()
+        sleep(1)
+        westinghouse.mpd_toggle_pause()
 
 
 if __name__ == '__main__':

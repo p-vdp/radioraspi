@@ -121,5 +121,16 @@ def mpd_toggle_pause(host="localhost", port=6600):
         del client
 
 
+def mpd_get_status(host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        status = client.status()
+    finally:
+        client.disconnect()
+        del client
+    return status
+
+
 if __name__ == '__main__':
-    pass
+    print(mpd_get_status())
