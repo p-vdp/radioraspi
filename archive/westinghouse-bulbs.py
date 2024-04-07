@@ -1,5 +1,3 @@
-from time import sleep
-
 import utils
 
 led_nc_yellow = utils.Gpio(13, "op")

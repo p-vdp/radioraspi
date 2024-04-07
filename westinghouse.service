@@ -1,0 +1,19 @@
+[Unit]
+Description=westinghouse
+Wants=dynamicswap.service
+
+StartLimitBurst=2
+StartLimitIntervalSec=5
+
+[Service]
+ExecStart=python3 /home/rpi/westinghouse/westinghouse.py
+Restart=on-failure
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=westinghouse
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
