@@ -121,17 +121,5 @@ def mpd_toggle_pause(host="localhost", port=6600):
         del client
 
 
-led_yellow_nc = Output(13, normally_closed=True)
-led_yellow_no1 = Output(12)
-led_yellow_no2 = Output(16)
-led_white_no = Output(27)
-
-# while True:
-#     response = mpd_is_alive()
-#     print(response)
-#     if response is True:
-#         subprocess.run(["sudo", "killall", "mpd"])
-#     sleep(1)
-
-print(mpd_is_alive())
-mpd_toggle_pause()
+if __name__ == '__main__':
+    pass
