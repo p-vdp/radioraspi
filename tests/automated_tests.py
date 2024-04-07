@@ -5,7 +5,7 @@ import unittest
 import westinghouse
 
 
-class TestCases(unittest.TestCase):
+class AutomatedTestCases(unittest.TestCase):
     def test_leds(self):
         gpio_pins = {12: False, 13: True, 16: False, 27: False}
 
