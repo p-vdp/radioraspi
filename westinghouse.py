@@ -8,7 +8,7 @@ import gpiod
 from mpd import MPDClient
 
 CHIP = gpiod.Chip("gpiochip4", gpiod.Chip.OPEN_BY_NAME)  # Raspberry Pi 5 spec
-POLLING_RATE = 0.1
+POLLING_RATE = 0.05
 
 
 class Output:
@@ -174,6 +174,36 @@ def mpd_toggle_pause(host="localhost", port=6600):
         del client
 
 
+def mpd_previous_track(host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.previous()
+    finally:
+        client.disconnect()
+        del client
+
+
+def mpd_next_track(host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.next()
+    finally:
+        client.disconnect()
+        del client
+
+
+def mpd_shuffle(host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.shuffle()
+    finally:
+        client.disconnect()
+        del client
+
+
 async def mpd_status_indicator(status_bulb: int):
     status_bulb = Output(status_bulb)
     status_bulb.on()
@@ -197,43 +227,68 @@ async def mpd_play_indicator(play_bulb: int):
 async def mpd_volume_knob(vol_down_gpio, vol_up_gpio):
     clk = Input(vol_down_gpio)
     dt = Input(vol_up_gpio)
-
-    counter = 0
     last_state = dt.value
+
     while True:
         clk_state = clk.value
         dt_state = dt.value
-
         if clk_state != last_state:
             if dt_state != clk_state:
-                counter += 1
-                rotation_direction = "R"
-            else:
-                counter -= 1
-                rotation_direction = "L"
-
-            if rotation_direction == "R":
-                # print(counter, rotation_direction)
                 run("/var/www/vol.sh -up 1".split(" "))
-
-            if rotation_direction == "L":
-                # print(counter, rotation_direction)
+            else:
                 run("/var/www/vol.sh -dn 1".split(" "))
-
+            print("volume =", mpd_get_status()["volume"])
         last_state = clk.value
         await asyncio.sleep(0.01)
 
 
 async def mpd_play_pause_button(play_pause_gpio):
-    pass
+    button = Input(play_pause_gpio)
+    initial_value = button.value
+    while True:
+        if button.value != initial_value:
+            print("play/pause")
+            mpd_toggle_pause()
+        await asyncio.sleep(POLLING_RATE)
 
 
 async def mpd_track_knob(track_previous_gpio, track_next_gpio, feedback_gpio):
-    pass
+    clk = Input(track_previous_gpio)
+    dt = Input(track_next_gpio)
+    last_state = dt.value
+    while True:
+        clk_state = clk.value
+        dt_state = dt.value
+        if clk_state != last_state:
+            feedback = Output(feedback_gpio)
+            feedback.toggle_on_off()
+            if dt_state != clk_state:
+                mpd_previous_track()
+                print("previous track")
+                sleep(POLLING_RATE)
+            else:
+                mpd_next_track()
+                print("next track")
+                sleep(POLLING_RATE)
+            feedback.toggle_on_off()
+            del feedback
+        last_state = clk.value
+        await asyncio.sleep(POLLING_RATE)
 
 
 async def mpd_shuffle_button(track_shuffle_button, feedback_gpio):
-    pass
+    button = Input(track_shuffle_button)
+    initial_value = button.value
+    while True:
+        if button.value != initial_value:
+            feedback = Output(feedback_gpio)
+            feedback.toggle_on_off()
+            mpd_shuffle()
+            feedback.toggle_on_off()
+            print("shuffle")
+            sleep(POLLING_RATE)
+            del feedback
+        await asyncio.sleep(POLLING_RATE)
 
 
 async def processes(
@@ -289,10 +344,10 @@ if __name__ == "__main__":
             feedback_bulb=16,
             vol_down_gpio=23,
             vol_up_gpio=24,
-            track_previous_gpio=4,
-            track_next_gpio=5,
-            play_pause_button=17,
-            track_shuffle_button=6,
+            track_previous_gpio=5,
+            track_next_gpio=6,
+            play_pause_button=4,
+            track_shuffle_button=17,
         )
     )
 

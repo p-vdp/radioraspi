@@ -6,7 +6,7 @@ StartLimitBurst=2
 StartLimitIntervalSec=5
 
 [Service]
-ExecStart=python3 /home/rpi/westinghouse/westinghouse.py
+ExecStart=/usr/bin/python /home/rpi/westinghouse.py
 Restart=on-failure
 
 StandardOutput=syslog
