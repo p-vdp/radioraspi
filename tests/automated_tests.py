@@ -72,10 +72,13 @@ class AutomatedTestCases(unittest.TestCase):
         print(status)
 
     def test_mpd_toggle_pause(self):
+        state1 = westinghouse.mpd_get_status()["state"]
         westinghouse.mpd_toggle_pause()
+        state2 = westinghouse.mpd_get_status()["state"]
+        self.assertNotEqual(state1, state2)
         sleep(1)
         westinghouse.mpd_toggle_pause()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

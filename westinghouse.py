@@ -1,3 +1,4 @@
+import os
 import select
 from time import sleep
 
@@ -99,6 +100,17 @@ class Input(Line):
         return event
 
 
+def mpd_get_status(host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        status = client.status()
+    finally:
+        client.disconnect()
+        del client
+    return status
+
+
 def mpd_is_alive(host="localhost", port=6600):
     client = MPDClient()
     try:
@@ -108,6 +120,36 @@ def mpd_is_alive(host="localhost", port=6600):
     except ConnectionRefusedError:
         return False
     finally:
+        del client
+
+
+def mpd_startup(host="localhost", port=6600, music_path="/mnt/SDCARD"):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+
+        client.clear()
+
+        for root, dirs, files in os.walk(music_path):
+            for filename in files:
+                print(filename)
+                if filename.split(".")[-1].lower() in [
+                    "mp3",
+                    "flac",
+                    "mp4",
+                    "m4a",
+                    "aiff",
+                    "aac",
+                ]:
+                    p = os.path.join(root, filename)
+                    if p.startswith("/mnt/"):
+                        p.strip("/mnt/")
+                    client.add(p)
+
+        client.shuffle()
+        client.play()
+    finally:
+        client.disconnect()
         del client
 
 
@@ -121,16 +163,8 @@ def mpd_toggle_pause(host="localhost", port=6600):
         del client
 
 
-def mpd_get_status(host="localhost", port=6600):
-    client = MPDClient()
-    try:
-        client.connect(host, port)
-        status = client.status()
-    finally:
-        client.disconnect()
-        del client
-    return status
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
+    print(mpd_get_status())
+    print("Startup....")
+    mpd_startup()
     print(mpd_get_status())
