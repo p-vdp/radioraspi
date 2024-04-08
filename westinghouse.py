@@ -5,7 +5,7 @@ from subprocess import run
 from time import sleep
 
 import gpiod
-from mpd import MPDClient
+from mpd import CommandError, MPDClient
 
 CHIP = gpiod.Chip("gpiochip4", gpiod.Chip.OPEN_BY_NAME)  # Raspberry Pi 5 spec
 POLLING_RATE = 0.05
@@ -176,22 +176,34 @@ def mpd_toggle_pause(host="localhost", port=6600):
 
 def mpd_previous_track(host="localhost", port=6600):
     client = MPDClient()
+    cmd = None
     try:
         client.connect(host, port)
         client.previous()
+        cmd = True
+    except CommandError:
+        sleep(1)
+        cmd = False
     finally:
         client.disconnect()
         del client
+        return cmd
 
 
 def mpd_next_track(host="localhost", port=6600):
     client = MPDClient()
+    cmd = None
     try:
         client.connect(host, port)
         client.next()
+        cmd = True
+    except CommandError:
+        sleep(1)
+        cmd = False
     finally:
         client.disconnect()
         del client
+        return cmd
 
 
 def mpd_shuffle(host="localhost", port=6600):
@@ -202,16 +214,6 @@ def mpd_shuffle(host="localhost", port=6600):
     finally:
         client.disconnect()
         del client
-
-
-async def mpd_status_indicator(status_bulb: int):
-    status_bulb = Output(status_bulb)
-    status_bulb.on()
-
-    while True:
-        if mpd_is_alive() is False:
-            status_bulb.blink(0.3)
-        await asyncio.sleep(POLLING_RATE)
 
 
 async def mpd_play_indicator(play_bulb: int):
@@ -259,19 +261,20 @@ async def mpd_track_knob(track_previous_gpio, track_next_gpio, feedback_gpio):
     while True:
         clk_state = clk.value
         dt_state = dt.value
+
         if clk_state != last_state:
-            feedback = Output(feedback_gpio)
-            feedback.toggle_on_off()
             if dt_state != clk_state:
-                mpd_previous_track()
-                print("previous track")
-                sleep(POLLING_RATE)
+                action = mpd_previous_track()
             else:
-                mpd_next_track()
-                print("next track")
-                sleep(POLLING_RATE)
-            feedback.toggle_on_off()
-            del feedback
+                action = mpd_next_track()
+
+            if action is True:
+                feedback = Output(feedback_gpio)
+                feedback.on()
+                del feedback
+
+            sleep(POLLING_RATE)
+
         last_state = clk.value
         await asyncio.sleep(POLLING_RATE)
 
@@ -282,18 +285,18 @@ async def mpd_shuffle_button(track_shuffle_button, feedback_gpio):
     while True:
         if button.value != initial_value:
             feedback = Output(feedback_gpio)
-            feedback.toggle_on_off()
+            feedback.on()
+
             mpd_shuffle()
-            feedback.toggle_on_off()
             print("shuffle")
-            sleep(POLLING_RATE)
+
             del feedback
+
+            sleep(POLLING_RATE)
         await asyncio.sleep(POLLING_RATE)
 
 
 async def processes(
-    nc_bulb,
-    indicator_bulb,
     play_bulb,
     feedback_bulb,
     vol_down_gpio,
@@ -303,12 +306,7 @@ async def processes(
     play_pause_button,
     track_shuffle_button,
 ):
-    nc = Output(nc_bulb, normally_closed=True)
-    nc.off()
-    print("Started")
-
     async with asyncio.TaskGroup() as tg:
-        tg.create_task(mpd_status_indicator(indicator_bulb))
         tg.create_task(mpd_play_indicator(play_bulb))
         tg.create_task(mpd_volume_knob(vol_down_gpio, vol_up_gpio))
         tg.create_task(mpd_play_pause_button(play_pause_button))
@@ -320,26 +318,20 @@ async def processes(
 
 if __name__ == "__main__":
     print("Starting westinghouse.py....")
+    nc = Output(13, normally_closed=True)
+    nc.off()
+    print("Started")
 
-    # print("Normally closed LEDs on GPIO 13, bulbs off")
-
-    # print("Normally open LEDs on GPIO 12, bulbs on")
-    # led_yellow_no1 = Output(12, normally_closed=False)
-    # led_yellow_no1.on()
-
-    # print("Normally open LEDs on GPIO 16, bulbs off")
-    # led_yellow_no2 = Output(16, normally_closed=False)
-    # print("Normally open LEDs on GPIO 27, bulbs off")
-    # led_white_no = Output(27, normally_closed=False)
-
-    print("Setting up MPD....")
-    mpd_startup()
+    print("Waiting for MPD....")
+    mpd_boot_status_bulb = Output(12)
+    mpd_boot_status_bulb.on()
+    while mpd_is_alive() is False:
+        mpd_boot_status_bulb.blink(2)
+    sleep(2)
 
     print("Starting processes....")
     asyncio.run(
         processes(
-            nc_bulb=13,
-            indicator_bulb=12,
             play_bulb=27,
             feedback_bulb=16,
             vol_down_gpio=23,
@@ -350,5 +342,9 @@ if __name__ == "__main__":
             track_shuffle_button=17,
         )
     )
+    sleep(5)
 
-print("Exiting....")
+    print("Setting up MPD....")
+    mpd_startup()
+
+    print("Done")
