@@ -128,11 +128,13 @@ def mpd_startup(host="localhost", port=6600, music_path="/mnt/SDCARD"):
     try:
         client.connect(host, port)
 
-        client.clear()
+        print("Updating....")
+        client.update()
 
+        print("Adding library to queue....")
+        client.clear()
         for root, dirs, files in os.walk(music_path):
             for filename in files:
-                print(filename)
                 if filename.split(".")[-1].lower() in [
                     "mp3",
                     "flac",
@@ -143,7 +145,7 @@ def mpd_startup(host="localhost", port=6600, music_path="/mnt/SDCARD"):
                 ]:
                     p = os.path.join(root, filename)
                     if p.startswith("/mnt/"):
-                        p.strip("/mnt/")
+                        p = p.strip("/mnt/")
                     client.add(p)
 
         client.shuffle()
@@ -165,6 +167,7 @@ def mpd_toggle_pause(host="localhost", port=6600):
 
 if __name__ == "__main__":
     print(mpd_get_status())
-    print("Startup....")
-    mpd_startup()
-    print(mpd_get_status())
+    mpd_toggle_pause()
+
+    while True:
+        sleep(1000)

@@ -71,6 +71,10 @@ class AutomatedTestCases(unittest.TestCase):
         self.assertEqual(isinstance(status, dict), True)
         print(status)
 
+    def test_mpd_startup(self):
+        westinghouse.mpd_startup()
+        print(westinghouse.mpd_get_status())
+
     def test_mpd_toggle_pause(self):
         state1 = westinghouse.mpd_get_status()["state"]
         westinghouse.mpd_toggle_pause()
