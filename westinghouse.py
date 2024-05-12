@@ -4,7 +4,7 @@ import select
 from subprocess import run
 from time import sleep
 
-import gpiod
+import gpiod  # noqa
 from mpd import CommandError, MPDClient
 
 CHIP = gpiod.Chip("gpiochip4", gpiod.Chip.OPEN_BY_NAME)  # Raspberry Pi 5 spec
