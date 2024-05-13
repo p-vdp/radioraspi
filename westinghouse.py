@@ -2,7 +2,6 @@ import asyncio
 import os
 import select
 from datetime import timedelta
-from subprocess import run
 from time import sleep
 
 import gpiod
@@ -239,6 +238,26 @@ def mpd_shuffle(host="localhost", port=6600):
         del client
 
 
+def mpd_volume_up(v: int, host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.volume("+" + str(v + 1))
+    finally:
+        client.disconnect()
+        del client
+
+
+def mpd_volume_down(v: int, host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.volume("+" + str(v - 1))
+    finally:
+        client.disconnect()
+        del client
+
+
 async def mpd_play_indicator(play_bulb: int):
     play_bulb = Output(play_bulb)
     while True:
@@ -258,11 +277,20 @@ async def mpd_volume_knob(vol_down_gpio, vol_up_gpio):
         clk_state = clk.value
         dt_state = dt.value
         if clk_state != last_state:
+            v = mpd_get_status()["volume"]
+            print("volume =", v)
             if dt_state != clk_state:
-                run("/var/www/vol.sh -up 1".split(" "))
+                v = int(v) + 1
+                print("volume =", v)
+                raise NotImplementedError
+                # mpd_volume_up(v)
+                # run("/var/www/vol.sh -up 1".split(" "))
             else:
-                run("/var/www/vol.sh -dn 1".split(" "))
-            print("volume =", mpd_get_status()["volume"])
+                v = int(v) - 1
+                print("volume =", v)
+                raise NotImplementedError
+                # mpd_volume_down(v)
+                # run("/var/www/vol.sh -dn 1".split(" "))
         last_state = clk.value
         await asyncio.sleep(0.01)
 
