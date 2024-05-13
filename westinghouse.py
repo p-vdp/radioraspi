@@ -1,11 +1,12 @@
 import asyncio
 import os
 import select
+from datetime import timedelta
 from subprocess import run
 from time import sleep
 
 import gpiod
-from gpiod.line import Direction, Value
+from gpiod.line import Bias, Direction, Edge, Value
 from mpd import CommandError, MPDClient
 
 CHIP = "/dev/gpiochip4"  # Raspberry Pi 5 spec
@@ -18,7 +19,7 @@ class Output:
         gpio_pin_num: int,
         normally_closed: bool = False,
         relay_delay: float = 0.3,
-        chip: gpiod.Chip = CHIP,
+        chip: str = CHIP,
     ):
         self._pin: int = gpio_pin_num
         self._normally_closed: bool = normally_closed
@@ -26,7 +27,7 @@ class Output:
         self._relay_delay = relay_delay
 
         self._line = gpiod.request_lines(
-            CHIP,
+            chip,
             consumer="LED",
             config={
                 self._pin: gpiod.LineSettings(
@@ -100,9 +101,19 @@ class Output:
 
 
 class Input:
-    def __init__(self, gpio_pin_num: int, chip: gpiod.Chip = CHIP):
+    def __init__(self, gpio_pin_num: int, chip_path: str = CHIP):
         self._pin: int = gpio_pin_num
-        self._line = chip.request_lines({self._pin: None}, "GPOUT")  # noqa
+        self._line = gpiod.request_lines(
+            chip_path,
+            consumer="BUTTON",
+            config={
+                self._pin: gpiod.LineSettings(
+                    edge_detection=Edge.BOTH,
+                    bias=Bias.PULL_UP,
+                    debounce_period=timedelta(milliseconds=10),
+                ),
+            },
+        )
 
     def __del__(self):
         self._line.release()
