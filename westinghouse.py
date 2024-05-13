@@ -5,9 +5,10 @@ from subprocess import run
 from time import sleep
 
 import gpiod
+from gpiod.line import Direction, Value
 from mpd import CommandError, MPDClient
 
-CHIP = gpiod.Chip("gpiochip4", gpiod.Chip.OPEN_BY_NAME)  # Raspberry Pi 5 spec
+CHIP = "/dev/gpiochip4"  # Raspberry Pi 5 spec
 POLLING_RATE = 0.05
 
 
@@ -19,37 +20,53 @@ class Output:
         relay_delay: float = 0.3,
         chip: gpiod.Chip = CHIP,
     ):
-        self._pin = gpio_pin_num
+        self._pin: int = gpio_pin_num
         self._normally_closed: bool = normally_closed
         self._normally_open: bool = not normally_closed
         self._relay_delay = relay_delay
 
-        self._line: gpiod.Line = chip.get_line(self._pin)
-        self._line.request(consumer="LED", type=gpiod.LINE_REQ_DIR_OUT)
+        self._line = gpiod.request_lines(
+            CHIP,
+            consumer="LED",
+            config={
+                self._pin: gpiod.LineSettings(
+                    direction=Direction.OUTPUT,
+                    output_value=Value.INACTIVE,
+                    active_low=self._normally_closed,
+                ),
+            },
+        )
 
     def __del__(self):
-        self._line.set_value(0)
         self._line.release()
 
     @property
     def value(self) -> int:
-        return self._line.get_value()
+        v = self._line.get_value(self._pin)
+        return v.value
+
+    @property
+    def is_on(self) -> bool:
+        if self.value == Value.ACTIVE:
+            return True
+        else:
+            return False
 
     def toggle_on_off(self):
-        if self._line.get_value() == 0:
+        if self._line.get_value(self._pin) == Value.INACTIVE:
             sleep(self._relay_delay)
-            self._line.set_value(1)
+            self._line.set_value(self._pin, Value.ACTIVE)
             sleep(self._relay_delay / 2)
             return 1
         else:
             sleep(self._relay_delay)
-            self._line.set_value(0)
+            self._line.set_value(self._pin, Value.INACTIVE)
             sleep(self._relay_delay / 2)
             return 0
 
     def on(self) -> bool:
         """Return True if turns on, return False if no change"""
-        value = self._line.get_value()
+        value = self._line.get_value(self._pin)
         if self._normally_closed is False and value == 0:
             self.toggle_on_off()
             return True
@@ -61,7 +78,7 @@ class Output:
 
     def off(self) -> bool:
         """Return True if turns off, return False if no change"""
-        value = self._line.get_value()
+        value = self._line.get_value(self._pin)
         if self._normally_closed is False and value == 1:
             self.toggle_on_off()
             return True
@@ -72,7 +89,7 @@ class Output:
             return False
 
     def reset(self):
-        self._line.set_value(0)
+        self._line.set_value(self._pin, Value.INACTIVE)
 
     def blink(self, seconds: [int, float]):
         self.toggle_on_off()
@@ -85,27 +102,22 @@ class Output:
 class Input:
     def __init__(self, gpio_pin_num: int, chip: gpiod.Chip = CHIP):
         self._pin: int = gpio_pin_num
-        self._line: gpiod.Line = chip.get_line(gpio_pin_num)
-        self._line.request(
-            consumer="GPOUT",
-            type=gpiod.LINE_REQ_EV_FALLING_EDGE,
-            flags=gpiod.LINE_REQ_FLAG_BIAS_PULL_UP,
-        )
+        self._line = chip.request_lines({self._pin: None}, "GPOUT")  # noqa
 
     def __del__(self):
         self._line.release()
 
     @property
-    def value(self) -> int:
-        return self._line.get_value()
+    def value(self):
+        return self._line.get_value(self._pin)
 
     def wait(self):
         """https://stackoverflow.com/questions/76676779/problem-with-event-wait-in-python3-libgpiod"""
-        fd = self._line.event_get_fd()
+        fd = self._line.wait_edge_events()
         poll = select.poll()
         poll.register(fd)
         poll.poll(None)  # wait here
-        event = self._line.event_read()
+        event = self._line.read_edge_events()
         return event
 
 

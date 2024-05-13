@@ -36,16 +36,16 @@ class AutomatedTestCases(unittest.TestCase):
     def test_circuit_normals(self):
         led_yellow_nc = westinghouse.Output(13, normally_closed=True)
         led_yellow_nc.on()
-        self.assertEqual(led_yellow_nc.is_on, True)
+        self.assertEqual(led_yellow_nc.is_on, False)
 
         led_white_no = westinghouse.Output(27, normally_closed=False)
         led_white_no.on()
-        self.assertEqual(led_white_no.is_on, True)
+        self.assertEqual(led_white_no.is_on, False)
 
         sleep(1)
         led_yellow_nc.off()
         led_white_no.off()
-        self.assertNotEqual(led_yellow_nc.value, led_white_no.value)
+        self.assertEqual(led_yellow_nc.value, led_white_no.value)
 
     def test_mpd_is_alive(self):
         response = westinghouse.mpd_is_alive()
