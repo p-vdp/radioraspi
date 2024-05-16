@@ -1,5 +1,4 @@
 import unittest
-from subprocess import run
 from time import sleep
 
 import westinghouse
