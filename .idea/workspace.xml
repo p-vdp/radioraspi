@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc69c498-b523-404b-96b0-66a7b4768264" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/auto_unittests.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/interactive_unittests.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/westinghouse.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/westinghouse.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/westinghouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/westinghouse.py" afterDir="false" />
-    </list>
+    <list default="true" id="cc69c498-b523-404b-96b0-66a7b4768264" name="Changes" comment="setup and tests working" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,9 +36,12 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python tests.Unittests in automated_tests.py.executor": "Run",
+    "Python tests.automated_tests.executor": "Run",
+    "Python tests.interactive_tests.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/rpi/westinghouse/tests/automated_tests.py",
+    "last_opened_file_path": "/home/rpi/westinghouse/westinghouse.py",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -68,7 +59,7 @@
       <window_info id="Pull Requests" show_stripe_button="false" />
       <window_info id="Learn" show_stripe_button="false" />
       <window_info content_ui="combo" id="Project" order="0" />
-      <window_info id="Commit" order="1" weight="0.25" />
+      <window_info active="true" id="Commit" order="1" visible="true" weight="0.18910539" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" show_stripe_button="false" />
@@ -77,11 +68,11 @@
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.33120567" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.51134753" />
       <window_info anchor="bottom" id="Services" order="4" />
-      <window_info anchor="bottom" id="Python Packages" order="5" weight="0.1" />
+      <window_info anchor="bottom" id="Python Packages" order="5" weight="0.51134753" />
       <window_info anchor="bottom" id="Python Console" order="6" weight="0.1" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.33120567" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.51134753" />
       <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
       <window_info anchor="right" id="Coverage" show_stripe_button="false" side_tool="true" />
       <window_info anchor="right" id="SciView" show_stripe_button="false" />
@@ -93,8 +84,9 @@
       <window_info anchor="right" id="Plots" order="5" weight="0.1" />
     </layout>
   </component>
-  <component name="RunManager" selected="Python tests.interactive_tests">
+  <component name="RunManager" selected="Python.main">
     <list>
+      <item itemvalue="Python.main" />
       <item itemvalue="Python tests.automated_tests" />
       <item itemvalue="Python tests.interactive_tests" />
     </list>
@@ -115,14 +107,36 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715898740307</updated>
-      <workItem from="1715898744797" duration="653000" />
+      <workItem from="1715898744797" duration="1016000" />
     </task>
+    <task id="LOCAL-00001" summary="setup and tests working">
+      <option name="closed" value="true" />
+      <created>1715899643905</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1715899643906</updated>
+    </task>
+    <task id="LOCAL-00002" summary="setup and tests working">
+      <option name="closed" value="true" />
+      <created>1715899712570</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715899712570</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="setup and tests working" />
+    <option name="LAST_COMMIT_MESSAGE" value="setup and tests working" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/westinghouse$Unittests_in_automated_tests_py.coverage" NAME="Unittests in automated_tests.py Coverage Results" MODIFIED="1715899256464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/westinghouse$Unittests_in_automated_tests_py.coverage" NAME="automated_tests Coverage Results" MODIFIED="1715899532107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/westinghouse$interactive_tests.coverage" NAME="interactive_tests Coverage Results" MODIFIED="1715899586855" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
