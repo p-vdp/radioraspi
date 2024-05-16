@@ -9,7 +9,239 @@ from gpiod.line import Bias, Direction, Edge, Value
 from mpd import CommandError, MPDClient
 
 CHIP = "/dev/gpiochip4"  # Raspberry Pi 5 spec
+HOST = "localhost"
 POLLING_RATE = 0.05
+PORT = 6600
+
+
+def mpd_get_status(host=HOST, port=PORT):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        status = client.status()
+    finally:
+        client.disconnect()
+        del client
+    return status
+
+
+def mpd_is_alive(host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.disconnect()
+        return True
+    except ConnectionRefusedError:
+        return False
+    finally:
+        del client
+
+
+def mpd_startup(host="localhost", port=6600, music_path="/mnt/SDCARD"):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+
+        print("Updating library....")
+        client.update()
+
+        print("Adding library to queue....")
+        client.clear()
+        for root, dirs, files in os.walk(music_path):
+            for filename in files:
+                if filename.split(".")[-1].lower() in [
+                    "mp3",
+                    "flac",
+                    "mp4",
+                    "m4a",
+                    "aiff",
+                    "aac",
+                ]:
+                    p = os.path.join(root, filename)
+                    if p.startswith("/mnt/"):
+                        p = p.strip("/mnt/")
+                    client.add(p)
+
+        client.shuffle()
+        client.play()
+    finally:
+        client.disconnect()
+        del client
+
+
+def mpd_toggle_pause(host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.pause()
+    finally:
+        client.disconnect()
+        del client
+
+
+def mpd_previous_track(host="localhost", port=6600):
+    client = MPDClient()
+    cmd = None
+    try:
+        client.connect(host, port)
+        client.previous()
+        cmd = True
+    except CommandError:
+        sleep(1)
+        cmd = False
+    finally:
+        client.disconnect()
+        del client
+        return cmd
+
+
+def mpd_next_track(host="localhost", port=6600):
+    client = MPDClient()
+    cmd = None
+    try:
+        client.connect(host, port)
+        client.next()
+        cmd = True
+    except CommandError:
+        sleep(1)
+        cmd = False
+    finally:
+        client.disconnect()
+        del client
+        return cmd
+
+
+def mpd_shuffle(host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.shuffle()
+    finally:
+        client.disconnect()
+        del client
+
+
+def mpd_volume_up(v: int = 1, host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.volume("+" + str(v))
+    finally:
+        client.disconnect()
+        del client
+
+
+def mpd_volume_down(v: int = 1, host="localhost", port=6600):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.volume("-" + str(v))
+    finally:
+        client.disconnect()
+        del client
+
+
+async def mpd_play_indicator(play_bulb: int):
+    play_bulb = Output(play_bulb)
+    while True:
+        if mpd_get_status()["state"] == "play":
+            play_bulb.on()
+        else:
+            play_bulb.off()
+        await asyncio.sleep(POLLING_RATE)
+
+
+async def gpio_shuffle_button(track_shuffle_button, feedback_gpio):
+    button = Input(track_shuffle_button)
+    initial_value = button.value
+    while True:
+        if button.value != initial_value:
+            feedback = Output(feedback_gpio)
+            feedback.on()
+
+            mpd_shuffle()
+            print("shuffle")
+
+            del feedback
+
+            sleep(POLLING_RATE)
+        await asyncio.sleep(POLLING_RATE)
+
+
+async def gpio_play_pause_button(play_pause_gpio):
+    button = Input(play_pause_gpio)
+    initial_value = button.value
+    while True:
+        if button.value != initial_value:
+            print("play/pause")
+            mpd_toggle_pause()
+        await asyncio.sleep(POLLING_RATE)
+
+
+async def gpio_track_knob(track_previous_gpio, track_next_gpio, feedback_gpio):
+    clk = Input(track_previous_gpio)
+    dt = Input(track_next_gpio)
+    last_state = dt.value
+    while True:
+        clk_state = clk.value
+        dt_state = dt.value
+
+        if clk_state != last_state:
+            if dt_state != clk_state:
+                print("previous track")
+                action = mpd_previous_track()
+            else:
+                print("next track")
+                action = mpd_next_track()
+
+            if action is True:
+                feedback = Output(feedback_gpio)
+                feedback.on()
+                del feedback
+
+            sleep(POLLING_RATE)
+
+        last_state = clk.value
+        await asyncio.sleep(POLLING_RATE)
+
+
+async def gpio_volume_knob(vol_down_gpio, vol_up_gpio):
+    clk = Input(vol_down_gpio)
+    dt = Input(vol_up_gpio)
+    last_state = dt.value
+
+    while True:
+        clk_state = clk.value
+        dt_state = dt.value
+        if clk_state != last_state:
+            if dt_state != clk_state:
+                print("volume up")
+                mpd_volume_up()
+            else:
+                print("volume down")
+                mpd_volume_down()
+        last_state = clk.value
+        await asyncio.sleep(POLLING_RATE)
+
+
+async def processes(
+    play_bulb,
+    feedback_bulb,
+    vol_down_gpio,
+    vol_up_gpio,
+    track_previous_gpio,
+    track_next_gpio,
+    play_pause_button,
+    track_shuffle_button,
+):
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(mpd_play_indicator(play_bulb))
+        tg.create_task(gpio_volume_knob(vol_down_gpio, vol_up_gpio))
+        tg.create_task(gpio_play_pause_button(play_pause_button))
+        tg.create_task(
+            gpio_track_knob(track_previous_gpio, track_next_gpio, feedback_bulb)
+        )
+        tg.create_task(gpio_shuffle_button(track_shuffle_button, feedback_bulb))
 
 
 class Output:
@@ -129,242 +361,6 @@ class Input:
         poll.poll(None)  # wait here
         event = self._line.read_edge_events()
         return event
-
-
-def mpd_get_status(host="localhost", port=6600):
-    client = MPDClient()
-    try:
-        client.connect(host, port)
-        status = client.status()
-    finally:
-        client.disconnect()
-        del client
-    return status
-
-
-def mpd_is_alive(host="localhost", port=6600):
-    client = MPDClient()
-    try:
-        client.connect(host, port)
-        client.disconnect()
-        return True
-    except ConnectionRefusedError:
-        return False
-    finally:
-        del client
-
-
-def mpd_startup(host="localhost", port=6600, music_path="/mnt/SDCARD"):
-    client = MPDClient()
-    try:
-        client.connect(host, port)
-
-        print("Updating library....")
-        client.update()
-
-        print("Adding library to queue....")
-        client.clear()
-        for root, dirs, files in os.walk(music_path):
-            for filename in files:
-                if filename.split(".")[-1].lower() in [
-                    "mp3",
-                    "flac",
-                    "mp4",
-                    "m4a",
-                    "aiff",
-                    "aac",
-                ]:
-                    p = os.path.join(root, filename)
-                    if p.startswith("/mnt/"):
-                        p = p.strip("/mnt/")
-                    client.add(p)
-
-        client.shuffle()
-        client.play()
-    finally:
-        client.disconnect()
-        del client
-
-
-def mpd_toggle_pause(host="localhost", port=6600):
-    client = MPDClient()
-    try:
-        client.connect(host, port)
-        client.pause()
-    finally:
-        client.disconnect()
-        del client
-
-
-def mpd_previous_track(host="localhost", port=6600):
-    client = MPDClient()
-    cmd = None
-    try:
-        client.connect(host, port)
-        client.previous()
-        cmd = True
-    except CommandError:
-        sleep(1)
-        cmd = False
-    finally:
-        client.disconnect()
-        del client
-        return cmd
-
-
-def mpd_next_track(host="localhost", port=6600):
-    client = MPDClient()
-    cmd = None
-    try:
-        client.connect(host, port)
-        client.next()
-        cmd = True
-    except CommandError:
-        sleep(1)
-        cmd = False
-    finally:
-        client.disconnect()
-        del client
-        return cmd
-
-
-def mpd_shuffle(host="localhost", port=6600):
-    client = MPDClient()
-    try:
-        client.connect(host, port)
-        client.shuffle()
-    finally:
-        client.disconnect()
-        del client
-
-
-def mpd_volume_up(v: int, host="localhost", port=6600):
-    client = MPDClient()
-    try:
-        client.connect(host, port)
-        client.volume("+" + str(v + 1))
-    finally:
-        client.disconnect()
-        del client
-
-
-def mpd_volume_down(v: int, host="localhost", port=6600):
-    client = MPDClient()
-    try:
-        client.connect(host, port)
-        client.volume("+" + str(v - 1))
-    finally:
-        client.disconnect()
-        del client
-
-
-async def mpd_play_indicator(play_bulb: int):
-    play_bulb = Output(play_bulb)
-    while True:
-        if mpd_get_status()["state"] == "play":
-            play_bulb.on()
-        else:
-            play_bulb.off()
-        await asyncio.sleep(POLLING_RATE)
-
-
-async def mpd_volume_knob(vol_down_gpio, vol_up_gpio):
-    clk = Input(vol_down_gpio)
-    dt = Input(vol_up_gpio)
-    last_state = dt.value
-
-    while True:
-        clk_state = clk.value
-        dt_state = dt.value
-        if clk_state != last_state:
-            v = mpd_get_status()["volume"]
-            print("volume =", v)
-            if dt_state != clk_state:
-                v = int(v) + 1
-                print("volume =", v)
-                raise NotImplementedError
-                # mpd_volume_up(v)
-                # run("/var/www/vol.sh -up 1".split(" "))
-            else:
-                v = int(v) - 1
-                print("volume =", v)
-                raise NotImplementedError
-                # mpd_volume_down(v)
-                # run("/var/www/vol.sh -dn 1".split(" "))
-        last_state = clk.value
-        await asyncio.sleep(0.01)
-
-
-async def mpd_play_pause_button(play_pause_gpio):
-    button = Input(play_pause_gpio)
-    initial_value = button.value
-    while True:
-        if button.value != initial_value:
-            print("play/pause")
-            mpd_toggle_pause()
-        await asyncio.sleep(POLLING_RATE)
-
-
-async def mpd_track_knob(track_previous_gpio, track_next_gpio, feedback_gpio):
-    clk = Input(track_previous_gpio)
-    dt = Input(track_next_gpio)
-    last_state = dt.value
-    while True:
-        clk_state = clk.value
-        dt_state = dt.value
-
-        if clk_state != last_state:
-            if dt_state != clk_state:
-                action = mpd_previous_track()
-            else:
-                action = mpd_next_track()
-
-            if action is True:
-                feedback = Output(feedback_gpio)
-                feedback.on()
-                del feedback
-
-            sleep(POLLING_RATE)
-
-        last_state = clk.value
-        await asyncio.sleep(POLLING_RATE)
-
-
-async def mpd_shuffle_button(track_shuffle_button, feedback_gpio):
-    button = Input(track_shuffle_button)
-    initial_value = button.value
-    while True:
-        if button.value != initial_value:
-            feedback = Output(feedback_gpio)
-            feedback.on()
-
-            mpd_shuffle()
-            print("shuffle")
-
-            del feedback
-
-            sleep(POLLING_RATE)
-        await asyncio.sleep(POLLING_RATE)
-
-
-async def processes(
-    play_bulb,
-    feedback_bulb,
-    vol_down_gpio,
-    vol_up_gpio,
-    track_previous_gpio,
-    track_next_gpio,
-    play_pause_button,
-    track_shuffle_button,
-):
-    async with asyncio.TaskGroup() as tg:
-        tg.create_task(mpd_play_indicator(play_bulb))
-        tg.create_task(mpd_volume_knob(vol_down_gpio, vol_up_gpio))
-        tg.create_task(mpd_play_pause_button(play_pause_button))
-        tg.create_task(
-            mpd_track_knob(track_previous_gpio, track_next_gpio, feedback_bulb)
-        )
-        tg.create_task(mpd_shuffle_button(track_shuffle_button, feedback_bulb))
 
 
 if __name__ == "__main__":
