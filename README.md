@@ -2,7 +2,11 @@
 
 Custom GPIO actions for a radio restoration.
 
-## Installation
+## Basic Installation
+
+add to /etc/rc.local
+
+## Service Installation
 
 Modify `westinghouse.service` file line 9 to point to script location, default is `/home/rpi/westinghouse/westinghouse.py`
 
