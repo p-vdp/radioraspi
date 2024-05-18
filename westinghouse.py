@@ -25,7 +25,7 @@ def mpd_get_status(host=HOST, port=PORT):
     return status
 
 
-def mpd_is_alive(host="localhost", port=6600):
+def mpd_is_alive(host=HOST, port=PORT):
     client = MPDClient()
     try:
         client.connect(host, port)
@@ -37,7 +37,7 @@ def mpd_is_alive(host="localhost", port=6600):
         del client
 
 
-def mpd_startup(host="localhost", port=6600, music_path="/mnt/SDCARD"):
+def mpd_startup(host=HOST, port=PORT, music_path="/mnt/SDCARD"):
     client = MPDClient()
     try:
         client.connect(host, port)
@@ -69,7 +69,7 @@ def mpd_startup(host="localhost", port=6600, music_path="/mnt/SDCARD"):
         del client
 
 
-def mpd_toggle_pause(host="localhost", port=6600):
+def mpd_toggle_pause(host=HOST, port=PORT):
     client = MPDClient()
     try:
         client.connect(host, port)
@@ -79,7 +79,7 @@ def mpd_toggle_pause(host="localhost", port=6600):
         del client
 
 
-def mpd_previous_track(host="localhost", port=6600):
+def mpd_previous_track(host=HOST, port=PORT):
     client = MPDClient()
     cmd = None
     try:
@@ -95,7 +95,7 @@ def mpd_previous_track(host="localhost", port=6600):
         return cmd
 
 
-def mpd_next_track(host="localhost", port=6600):
+def mpd_next_track(host=HOST, port=PORT):
     client = MPDClient()
     cmd = None
     try:
@@ -111,7 +111,7 @@ def mpd_next_track(host="localhost", port=6600):
         return cmd
 
 
-def mpd_shuffle(host="localhost", port=6600):
+def mpd_shuffle(host=HOST, port=PORT):
     client = MPDClient()
     try:
         client.connect(host, port)
@@ -121,7 +121,7 @@ def mpd_shuffle(host="localhost", port=6600):
         del client
 
 
-def mpd_volume_up(v: int = 1, host="localhost", port=6600):
+def mpd_volume_up(v: int = 1,host=HOST, port=PORT):
     client = MPDClient()
     try:
         client.connect(host, port)
@@ -131,7 +131,7 @@ def mpd_volume_up(v: int = 1, host="localhost", port=6600):
         del client
 
 
-def mpd_volume_down(v: int = 1, host="localhost", port=6600):
+def mpd_volume_down(v: int = 1,host=HOST, port=PORT):
     client = MPDClient()
     try:
         client.connect(host, port)
@@ -141,30 +141,34 @@ def mpd_volume_down(v: int = 1, host="localhost", port=6600):
         del client
 
 
-async def mpd_play_indicator(play_bulb: int):
-    play_bulb = Output(play_bulb)
-    while True:
-        if mpd_get_status()["state"] == "play":
-            play_bulb.on()
-        else:
-            play_bulb.off()
-        await asyncio.sleep(POLLING_RATE)
-
-
 async def gpio_shuffle_button(track_shuffle_button, feedback_gpio):
     button = Input(track_shuffle_button)
     initial_value = button.value
+
+    # feedback = Output(feedback_gpio)  # TODO make global
     while True:
         if button.value != initial_value:
-            feedback = Output(feedback_gpio)
-            feedback.on()
-
-            mpd_shuffle()
             print("shuffle")
+            mpd_shuffle()
+            # feedback.on()
+            sleep(2)
+            # feedback.off()
+            initial_value = button.value
+        await asyncio.sleep(POLLING_RATE)
 
-            del feedback
 
-            sleep(POLLING_RATE)
+async def gpio_play_indicator(play_bulb_gpio: int):
+    play_bulb = Output(play_bulb_gpio)
+    while True:
+        play_state = mpd_get_status()["state"]
+        if play_state == "play" and not play_bulb.is_on:
+            print('Playing, turning on bulb', play_bulb_gpio)
+            play_bulb.on()
+            sleep(1)
+        elif play_state != "play" and play_bulb.is_on:
+            print('Not playing, turning off bulb', play_bulb_gpio)
+            play_bulb.off()
+            sleep(1)
         await asyncio.sleep(POLLING_RATE)
 
 
@@ -175,6 +179,7 @@ async def gpio_play_pause_button(play_pause_gpio):
         if button.value != initial_value:
             print("play/pause")
             mpd_toggle_pause()
+            sleep(1)
         await asyncio.sleep(POLLING_RATE)
 
 
@@ -189,15 +194,18 @@ async def gpio_track_knob(track_previous_gpio, track_next_gpio, feedback_gpio):
         if clk_state != last_state:
             if dt_state != clk_state:
                 print("previous track")
+                sleep(1)
                 action = mpd_previous_track()
+
             else:
                 print("next track")
+                sleep(1)
                 action = mpd_next_track()
 
-            if action is True:
-                feedback = Output(feedback_gpio)
-                feedback.on()
-                del feedback
+            # if action is True:  # TODO feedback
+            #     feedback = Output(feedback_gpio)
+            #     feedback.on()
+            #     del feedback
 
             sleep(POLLING_RATE)
 
@@ -235,7 +243,7 @@ async def processes(
     track_shuffle_button,
 ):
     async with asyncio.TaskGroup() as tg:
-        tg.create_task(mpd_play_indicator(play_bulb))
+        tg.create_task(gpio_play_indicator(play_bulb))
         tg.create_task(gpio_volume_knob(vol_down_gpio, vol_up_gpio))
         tg.create_task(gpio_play_pause_button(play_pause_button))
         tg.create_task(
@@ -271,7 +279,7 @@ class Output:
 
     def __del__(self):
         self._line.release()
-
+    
     @property
     def value(self) -> int:
         v = self._line.get_value(self._pin)
@@ -279,7 +287,7 @@ class Output:
 
     @property
     def is_on(self) -> bool:
-        if self.value == Value.ACTIVE:
+        if self._line.get_value(self._pin) == Value.ACTIVE:
             return True
         else:
             return False
@@ -298,30 +306,19 @@ class Output:
 
     def on(self) -> bool:
         """Return True if turns on, return False if no change"""
-        value = self._line.get_value(self._pin)
-        if self._normally_closed is False and value == 0:
-            self.toggle_on_off()
-            return True
-        elif self._normally_closed is True and value == 1:
-            self.toggle_on_off()
+        if self._line.get_value(self._pin) == Value.INACTIVE:
+            self._line.set_value(self._pin, Value.ACTIVE)
             return True
         else:
             return False
 
     def off(self) -> bool:
         """Return True if turns off, return False if no change"""
-        value = self._line.get_value(self._pin)
-        if self._normally_closed is False and value == 1:
-            self.toggle_on_off()
-            return True
-        elif self._normally_closed is True and value == 0:
-            self.toggle_on_off()
+        if self._line.get_value(self._pin) == Value.ACTIVE:
+            self._line.set_value(self._pin, Value.INACTIVE)
             return True
         else:
             return False
-
-    def reset(self):
-        self._line.set_value(self._pin, Value.INACTIVE)
 
     def blink(self, seconds: [int, float]):
         self.toggle_on_off()
@@ -366,15 +363,20 @@ class Input:
 if __name__ == "__main__":
     print("Starting westinghouse.py....")
     nc = Output(13, normally_closed=True)
+    nc.on()
     nc.off()
     print("Started")
 
     print("Waiting for MPD....")
-    mpd_boot_status_bulb = Output(12)
-    mpd_boot_status_bulb.on()
+    mpd_status_bulb = Output(12, normally_closed=True)
+    mpd_status_bulb.on()
     while mpd_is_alive() is False:
-        mpd_boot_status_bulb.blink(2)
+        mpd_status_bulb.blink(2)
+    mpd_status_bulb.off()
     sleep(2)
+
+    print("Setting up MPD....")
+    mpd_startup()
 
     print("Starting processes....")
     asyncio.run(
@@ -390,8 +392,5 @@ if __name__ == "__main__":
         )
     )
     sleep(5)
-
-    print("Setting up MPD....")
-    mpd_startup()
 
     print("Done")
