@@ -2,9 +2,9 @@
 
 Custom GPIO actions for a radio restoration.
 
-## Basic Installation
+## Install GPIOD
 
-add to /etc/rc.local
+    sudo python -m pip install gpiod --break-system-packages
 
 ## Service Installation
 

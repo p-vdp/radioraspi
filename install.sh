@@ -1,3 +1,4 @@
+sudo python -m pip install gpiod --break-system-packages
 sudo chmod +x westinghouse.service
 sudo cp ./westinghouse.service /usr/lib/systemd/system/
 sudo systemctl daemon-reload
