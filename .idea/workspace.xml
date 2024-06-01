@@ -31,7 +31,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/p-vdp/westinghouse.git&quot;,
-    &quot;accountId&quot;: &quot;4165ceda-f210-42a6-9c42-22ad4318ce59&quot;
+    &quot;accountId&quot;: &quot;2b90821a-7518-4998-b1f9-4c0917608713&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -53,6 +53,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Shell Script.install.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/rpi/westinghouse&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -156,6 +157,8 @@
       <workItem from="1715990751975" duration="1209000" />
       <workItem from="1715992232373" duration="383000" />
       <workItem from="1715993072774" duration="140000" />
+      <workItem from="1717276625830" duration="56000" />
+      <workItem from="1717276697579" duration="668000" />
     </task>
     <task id="LOCAL-00001" summary="setup and tests working">
       <option name="closed" value="true" />
