@@ -97,7 +97,7 @@
       <window_info anchor="right" id="Plots" order="5" weight="0.1" />
     </layout>
   </component>
-  <component name="RunManager" selected="Shell Script.install">
+  <component name="RunManager" selected="Python tests.interactive_tests">
     <configuration name="setup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="westinghouse" />
       <option name="ENV_FILES" value="" />
