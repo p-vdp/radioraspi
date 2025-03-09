@@ -1,3 +1,2 @@
-black
-gpiod
-python-mpd2  # from mpd import MPDClient
+gpiozero
+python-mpd2  # mpd

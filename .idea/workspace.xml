@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc69c498-b523-404b-96b0-66a7b4768264" name="Changes" comment="install stuff">
+    <list default="true" id="cc69c498-b523-404b-96b0-66a7b4768264" name="Changes" comment="cleanup">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/westinghouse.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/westinghouse.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/westinghouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/westinghouse.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,12 +32,12 @@
     &quot;assignee&quot;: &quot;p-vdp&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/p-vdp/westinghouse.git&quot;,
-    &quot;accountId&quot;: &quot;2b90821a-7518-4998-b1f9-4c0917608713&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/p-vdp/westinghouse.git",
+    "accountId": "923ab084-7601-443c-a70a-0ea941e7f3ba"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -42,28 +46,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Unittests in automated_tests.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.automated_tests.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.interactive_tests.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.setup.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Shell Script.install.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/rpi/westinghouse&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Unittests in automated_tests.py.executor": "Run",
+    "Python tests.automated_tests.executor": "Run",
+    "Python tests.interactive_tests.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.setup.executor": "Run",
+    "Python.westinghouse.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SHELLCHECK.PATH": "/home/rpi/.local/share/JetBrains/PyCharm2025.1/Shell Script/shellcheck",
+    "Shell Script.install.executor": "Run",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "/home/rpi/westinghouse/.venv/bin/black",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Bookmarks" show_stripe_button="false" side_tool="true" />
@@ -71,21 +79,23 @@
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" show_stripe_button="false" />
       <window_info id="Learn" show_stripe_button="false" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.329938" />
-      <window_info active="true" id="Commit" order="1" sideWeight="0.50157475" visible="true" weight="0.329938" />
-      <window_info id="Structure" order="2" sideWeight="0.4984252" side_tool="true" weight="0.329938" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5013459" visible="true" weight="0.28621227" />
+      <window_info id="Commit" order="1" sideWeight="0.50157475" weight="0.3295895" />
+      <window_info active="true" id="Structure" order="2" sideWeight="0.49865413" side_tool="true" visible="true" weight="0.28621227" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" show_stripe_button="false" />
       <window_info anchor="bottom" id="File Transfer" show_stripe_button="false" />
+      <window_info anchor="bottom" id="HfCacheToolWindow" />
+      <window_info anchor="bottom" id="Find" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.6375886" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.67343175" />
       <window_info anchor="bottom" id="Services" order="4" />
-      <window_info anchor="bottom" id="Python Packages" order="5" weight="0.40921986" />
+      <window_info anchor="bottom" id="Python Packages" order="5" weight="0.3302583" />
       <window_info anchor="bottom" id="Python Console" order="6" weight="0.1" />
-      <window_info anchor="bottom" id="Run" order="7" weight="0.32978725" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.52460027" />
       <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
       <window_info anchor="right" id="Coverage" show_stripe_button="false" side_tool="true" />
       <window_info anchor="right" id="SciView" show_stripe_button="false" />
@@ -97,7 +107,7 @@
       <window_info anchor="right" id="Plots" order="5" weight="0.1" />
     </layout>
   </component>
-  <component name="RunManager" selected="Python tests.interactive_tests">
+  <component name="RunManager">
     <configuration name="setup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="westinghouse" />
       <option name="ENV_FILES" value="" />
@@ -137,8 +147,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-PY-241.15989.155" />
-        <option value="bundled-python-sdk-babbdf50b680-7c6932dee5e4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.15989.155" />
+        <option value="bundled-js-predefined-d6986cc7102b-45be767fe593-JavaScript-PY-251.23536.40" />
+        <option value="bundled-python-sdk-ed726c817bc5-aeb89614ce15-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.23536.40" />
       </set>
     </attachedChunks>
   </component>
@@ -159,6 +169,7 @@
       <workItem from="1715993072774" duration="140000" />
       <workItem from="1717276625830" duration="56000" />
       <workItem from="1717276697579" duration="668000" />
+      <workItem from="1741552290403" duration="6288000" />
     </task>
     <task id="LOCAL-00001" summary="setup and tests working">
       <option name="closed" value="true" />
@@ -200,7 +211,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715993176052</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="cleanup">
+      <option name="closed" value="true" />
+      <created>1741552564277</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741552564277</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,12 +229,14 @@
     <MESSAGE value="setup and tests working" />
     <MESSAGE value="script working" />
     <MESSAGE value="install stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="install stuff" />
+    <MESSAGE value="cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/westinghouse$Unittests_in_automated_tests_py.coverage" NAME="automated_tests Coverage Results" MODIFIED="1715899532107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/westinghouse$interactive_tests.coverage" NAME="interactive_tests Coverage Results" MODIFIED="1715899586855" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/westinghouse$main.coverage" NAME="main Coverage Results" MODIFIED="1715990972425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/westinghouse$westinghouse.coverage" NAME="westinghouse Coverage Results" MODIFIED="1741558219598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/westinghouse$setup.coverage" NAME="setup Coverage Results" MODIFIED="1715991435389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/westinghouse$main.coverage" NAME="main Coverage Results" MODIFIED="1715990972425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/westinghouse$interactive_tests.coverage" NAME="interactive_tests Coverage Results" MODIFIED="1741553127163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
