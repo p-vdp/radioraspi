@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc69c498-b523-404b-96b0-66a7b4768264" name="Changes" comment="cleanup">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/westinghouse.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/westinghouse.iml" afterDir="false" />
+    <list default="true" id="cc69c498-b523-404b-96b0-66a7b4768264" name="Changes" comment="play/pause and indicator light">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/westinghouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/westinghouse.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,9 +76,9 @@
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" show_stripe_button="false" />
       <window_info id="Learn" show_stripe_button="false" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5013459" visible="true" weight="0.28621227" />
-      <window_info id="Commit" order="1" sideWeight="0.50157475" weight="0.3295895" />
-      <window_info active="true" id="Structure" order="2" sideWeight="0.49865413" side_tool="true" visible="true" weight="0.28621227" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5013459" weight="0.28621227" />
+      <window_info active="true" id="Commit" order="1" sideWeight="0.50103736" visible="true" weight="0.28621227" />
+      <window_info id="Structure" order="2" sideWeight="0.49896264" side_tool="true" weight="0.28621227" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" show_stripe_button="false" />
@@ -95,7 +92,7 @@
       <window_info anchor="bottom" id="Services" order="4" />
       <window_info anchor="bottom" id="Python Packages" order="5" weight="0.3302583" />
       <window_info anchor="bottom" id="Python Console" order="6" weight="0.1" />
-      <window_info anchor="bottom" id="Run" order="7" weight="0.52460027" />
+      <window_info active="true" anchor="bottom" id="Run" order="7" visible="true" weight="0.3216482" />
       <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
       <window_info anchor="right" id="Coverage" show_stripe_button="false" side_tool="true" />
       <window_info anchor="right" id="SciView" show_stripe_button="false" />
@@ -169,7 +166,7 @@
       <workItem from="1715993072774" duration="140000" />
       <workItem from="1717276625830" duration="56000" />
       <workItem from="1717276697579" duration="668000" />
-      <workItem from="1741552290403" duration="6288000" />
+      <workItem from="1741552290403" duration="7703000" />
     </task>
     <task id="LOCAL-00001" summary="setup and tests working">
       <option name="closed" value="true" />
@@ -219,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741552564277</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="play/pause and indicator light">
+      <option name="closed" value="true" />
+      <created>1741558630344</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1741558630344</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,11 +235,12 @@
     <MESSAGE value="script working" />
     <MESSAGE value="install stuff" />
     <MESSAGE value="cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleanup" />
+    <MESSAGE value="play/pause and indicator light" />
+    <option name="LAST_COMMIT_MESSAGE" value="play/pause and indicator light" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/westinghouse$Unittests_in_automated_tests_py.coverage" NAME="automated_tests Coverage Results" MODIFIED="1715899532107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/westinghouse$westinghouse.coverage" NAME="westinghouse Coverage Results" MODIFIED="1741558219598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/westinghouse$westinghouse.coverage" NAME="westinghouse Coverage Results" MODIFIED="1741559943161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/westinghouse$setup.coverage" NAME="setup Coverage Results" MODIFIED="1715991435389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/westinghouse$main.coverage" NAME="main Coverage Results" MODIFIED="1715990972425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/westinghouse$interactive_tests.coverage" NAME="interactive_tests Coverage Results" MODIFIED="1741553127163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

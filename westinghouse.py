@@ -11,6 +11,7 @@ PORT = 6600
 NC = 16  # LED normally closed
 NO = 12  # LED normally open
 PP = 4  # play/pause button
+SB = 17  # shuffle button
 
 
 def mpd_get_status(host=HOST, port=PORT):
@@ -36,6 +37,16 @@ def mpd_is_alive(host=HOST, port=PORT):
         client.disconnect()
         del client
         return True
+
+
+def mpd_shuffle(host=HOST, port=PORT):
+    client = MPDClient()
+    try:
+        client.connect(host, port)
+        client.shuffle()  # noqa
+    finally:
+        client.disconnect()
+        del client
 
 
 def mpd_toggle_pause(host=HOST, port=PORT):
@@ -78,10 +89,25 @@ async def gpio_play_indicator():
         await asyncio.sleep(POLLING_RATE)
 
 
+async def gpio_shuffle_button(track_shuffle_button: int = SB):
+    button = gpiozero.Button(track_shuffle_button)
+    initial_value = button.value
+    while True:
+        if button.value != initial_value:
+            print("shuffle")
+            mpd_shuffle()
+            led_no.off()
+            await asyncio.sleep(0.1)
+            led_no.on()
+            await asyncio.sleep(1)
+        await asyncio.sleep(POLLING_RATE)
+
+
 async def processes():
     async with asyncio.TaskGroup() as tg:
         tg.create_task(gpio_play_indicator())
         tg.create_task(gpio_play_pause_button())
+        tg.create_task(gpio_shuffle_button())
 
 
 print("Starting westinghouse.py....")
