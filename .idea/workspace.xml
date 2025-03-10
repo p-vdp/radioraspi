@@ -147,12 +147,12 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
       <item itemvalue="Python.setup" />
-      <item itemvalue="Python tests.automated_tests" />
-      <item itemvalue="Python tests.interactive_tests" />
-      <item itemvalue="Shell Script.install" />
       <item itemvalue="Shell Script.uninstall" />
+      <item itemvalue="Python tests.automated_tests" />
+      <item itemvalue="Shell Script.install" />
+      <item itemvalue="Python tests.interactive_tests" />
+      <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>

@@ -6,6 +6,7 @@ StartLimitBurst=1
 StartLimitIntervalSec=1000
 
 [Service]
+ExecStartPre=/bin/sleep 20
 ExecStart=/usr/bin/python /home/rpi/westinghouse/westinghouse.py
 Restart=always
 RestartSec=10
