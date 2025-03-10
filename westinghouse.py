@@ -1,5 +1,6 @@
 import asyncio
 from subprocess import run
+from time import sleep
 
 import gpiozero
 from mpd import CommandError, MPDClient  # noqa
@@ -20,7 +21,7 @@ VD = 23  # volume down on rotary encoder
 VU = 24  # volume up on rotary encoder
 
 
-def mpd_get_status(host=HOST, port=PORT) -> str:
+def mpd_get_status(host=HOST, port=PORT) -> dict:
     client = MPDClient()
     status = None
 
@@ -94,6 +95,16 @@ def mpd_next_track(host=HOST, port=PORT):
         client.disconnect()
         del client
         return cmd
+
+
+def mpd_startup(host=HOST, port=PORT):
+    client = MPDClient()
+    try:
+        client.shuffle()
+        client.play()
+    finally:
+        client.disconnect()
+        del client
 
 
 def mpd_volume_down(increment: int = 1):
@@ -244,6 +255,8 @@ if __name__ == "__main__":
     led_nc.blink(1, 1, 1, background=False)
     led_no.blink(1, 1, 1, background=False)
 
+    sleep(30)
+
     print("Waiting for MPD....")
     while mpd_is_alive() is False:
         print("MPD is down, blinking....")
@@ -251,6 +264,9 @@ if __name__ == "__main__":
 
     print("MPD is alive! Status:")
     print(mpd_get_status())
+
+    print("Running MPD startup script. Status:")
+    mpd_startup()
 
     print("Starting processes....")
     asyncio.run(processes())

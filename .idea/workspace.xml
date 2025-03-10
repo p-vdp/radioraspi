@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cc69c498-b523-404b-96b0-66a7b4768264" name="Changes" comment="shuffle working">
-      <change afterPath="$PROJECT_DIR$/tests/rotary_encoder_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/install.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/install.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uninstall.sh" beforeDir="false" afterPath="$PROJECT_DIR$/uninstall.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/westinghouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/westinghouse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/westinghouse.service" beforeDir="false" afterPath="$PROJECT_DIR$/westinghouse.service" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,6 +189,7 @@
       <workItem from="1741565040137" duration="2041000" />
       <workItem from="1741567312152" duration="198000" />
       <workItem from="1741567930635" duration="6197000" />
+      <workItem from="1741575802117" duration="214000" />
     </task>
     <task id="LOCAL-00001" summary="setup and tests working">
       <option name="closed" value="true" />
