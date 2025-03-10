@@ -3,11 +3,11 @@ Description=westinghouse
 Wants=dynamicswap.service
 
 StartLimitBurst=1
-StartLimitIntervalSec=1000
+StartLimitIntervalSec=10
 
 [Service]
 ExecStart=/usr/bin/python /home/rpi/westinghouse/westinghouse.py
-Restart=on-failure
+Restart=always
 
 StandardOutput=syslog
 StandardError=syslog
