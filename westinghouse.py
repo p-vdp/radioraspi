@@ -251,22 +251,23 @@ led_nc = gpiozero.LED(NC)
 led_no = gpiozero.LED(NO)
 
 if __name__ == "__main__":
+    print("sleep 10")
+    sleep(10)
+
     print("Blinking once....")
     led_nc.blink(1, 1, 1, background=False)
     led_no.blink(1, 1, 1, background=False)
 
-    sleep(30)
-
-    print("Waiting for MPD....")
-    while mpd_is_alive() is False:
-        print("MPD is down, blinking....")
-        led_nc.blink(2, 2, 1, background=False)
-
-    print("MPD is alive! Status:")
-    print(mpd_get_status())
-
-    print("Running MPD startup script. Status:")
-    mpd_startup()
+    # print("Waiting for MPD....")
+    # while mpd_is_alive() is False:
+    #     print("MPD is down, blinking....")
+    #     led_nc.blink(2, 2, 1, background=False)
+    #
+    # print("MPD is alive! Status:")
+    # print(mpd_get_status())
+    #
+    # print("Running MPD startup script. Status:")
+    # mpd_startup()
 
     print("Starting processes....")
     asyncio.run(processes())
