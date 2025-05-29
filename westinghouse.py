@@ -1,6 +1,7 @@
 import asyncio
 import os
 from subprocess import run
+from time import sleep
 
 import gpiozero
 from mpd import CommandError, MPDClient  # noqa
@@ -271,6 +272,7 @@ led_nc = gpiozero.LED(NC)
 led_no = gpiozero.LED(NO)
 
 if __name__ == "__main__":
+    sleep(10)
     print("Blinking once....")
     led_nc.blink(1, 1, 1, background=False)
 
