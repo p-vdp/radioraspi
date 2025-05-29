@@ -1,22 +1,25 @@
 # Westinghouse
 
 Custom GPIO actions for a radio restoration.
+## Install
 
-## Install GPIOD
+Create Moode install on SD card using RPi Imager: https://www.raspberrypi.com/software/
 
-    sudo python -m pip install gpiod --break-system-packages
+ssh into Raspberry Pi
 
-## Service Installation
+`sudo apt update`
 
-Modify `westinghouse.service` file line 9 to point to script location, default is `/home/rpi/westinghouse/westinghouse.py`
+`sudo apt upgrade`
 
-Then run these commands:
+`sudo apt install gh`
 
-    sudo chmod +x westinghouse.service
-    sudo cp westinghouse.service /usr/lib/systemd/system/
-    sudo systemctl daemon-reload
-    sudo systemctl enable westinghouse.service
-    sudo systemctl start westinghouse.service
+`gh auth login`
+
+use token
+
+`gh repo clone p-vdp/westinghouse`
+
+`sudo bash ./westinghouse/install.sh`
 
 ## Monitoring
 

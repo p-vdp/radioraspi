@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc69c498-b523-404b-96b0-66a7b4768264" name="Changes" comment="startup working" />
+    <list default="true" id="cc69c498-b523-404b-96b0-66a7b4768264" name="Changes" comment="startup working">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/westinghouse.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/westinghouse.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/westinghouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/westinghouse.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,41 +47,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Unittests in automated_tests.py.executor": "Run",
-    "Python tests.automated_tests.executor": "Run",
-    "Python tests.interactive_tests.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.rotary_encoder_test.executor": "Run",
-    "Python.setup.executor": "Run",
-    "Python.westinghouse.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SHELLCHECK.PATH": "/home/rpi/.local/share/JetBrains/PyCharm2025.1/Shell Script/shellcheck",
-    "Shell Script.install.executor": "Run",
-    "Shell Script.uninstall.executor": "Run",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "/home/rpi/westinghouse/.venv/bin/black",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Unittests in automated_tests.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.automated_tests.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.interactive_tests.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.rotary_encoder_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.setup.executor&quot;: &quot;Run&quot;,
+    &quot;Python.westinghouse.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;/home/rpi/.local/share/JetBrains/PyCharm2025.1/Shell Script/shellcheck&quot;,
+    &quot;Shell Script.install.executor&quot;: &quot;Run&quot;,
+    &quot;Shell Script.uninstall.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/rpi/westinghouse/.venv/bin/black&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Bookmarks" side_tool="true" />
       <window_info id="Merge Requests" show_stripe_button="false" />
+      <window_info id="AI Playground" side_tool="true" />
+      <window_info id="Backup and Sync History" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
       <window_info id="Learn" show_stripe_button="false" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5013459" visible="true" weight="0.33036405" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5013459" />
       <window_info id="Commit" order="1" sideWeight="0.50103736" weight="0.33036405" />
       <window_info id="Structure" order="2" sideWeight="0.49896264" side_tool="true" weight="0.28621227" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -87,14 +96,15 @@
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.3302583" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.3302583" />
       <window_info anchor="bottom" id="Services" order="4" />
       <window_info anchor="bottom" id="Python Packages" order="5" weight="0.3302583" />
       <window_info anchor="bottom" id="Python Console" order="6" weight="0.44341943" />
-      <window_info active="true" anchor="bottom" id="Run" order="7" visible="true" weight="0.43111932" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.43111932" />
       <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
       <window_info anchor="right" id="Coverage" show_stripe_button="false" side_tool="true" />
       <window_info anchor="right" id="SciView" show_stripe_button="false" />
+      <window_info anchor="right" id="Jupyter Variables" side_tool="true" />
       <window_info anchor="right" id="Notifications" order="0" weight="0.33036405" />
       <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
       <window_info anchor="right" id="Database" order="2" weight="0.25" />
@@ -159,8 +169,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-45be767fe593-JavaScript-PY-251.23536.40" />
-        <option value="bundled-python-sdk-ed726c817bc5-aeb89614ce15-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.23536.40" />
+        <option value="bundled-js-predefined-d6986cc7102b-cf89dd401a8c-JavaScript-PY-252.16512.37" />
+        <option value="bundled-python-sdk-262900b78aa6-ab799c6dbea5-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.16512.37" />
       </set>
     </attachedChunks>
   </component>
@@ -193,6 +203,10 @@
       <workItem from="1741745338722" duration="59000" />
       <workItem from="1741745541556" duration="57000" />
       <workItem from="1741745779267" duration="93000" />
+      <workItem from="1748545361594" duration="555000" />
+      <workItem from="1748546962040" duration="988000" />
+      <workItem from="1748548218198" duration="301000" />
+      <workItem from="1748549091765" duration="1345000" />
     </task>
     <task id="LOCAL-00001" summary="setup and tests working">
       <option name="closed" value="true" />
