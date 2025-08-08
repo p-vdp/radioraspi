@@ -267,7 +267,7 @@ async def processes():
         # tg.create_task(gpio_volume_knob())  # use built-in Moode volume control instead
 
 
-print("Starting westinghouse.py....")
+print("Starting radioraspi.py....")
 led_nc = gpiozero.LED(NC)
 led_no = gpiozero.LED(NO)
 

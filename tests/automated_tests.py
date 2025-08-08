@@ -2,7 +2,7 @@ from subprocess import run
 from time import sleep
 import unittest
 
-import westinghouse
+import radioraspi
 
 
 class AutomatedTestCases(unittest.TestCase):
@@ -13,7 +13,7 @@ class AutomatedTestCases(unittest.TestCase):
         activated_pins = list()
         for p in gpio_pins:
             normally_closed = gpio_pins[p]
-            pin = westinghouse.Output(gpio_pin_num=p, normally_closed=normally_closed)
+            pin = radioraspi.Output(gpio_pin_num=p, normally_closed=normally_closed)
             initial = pin.value
             print("pin:", p, "initial:", initial, "nc:", normally_closed)
             pin.off()
@@ -34,11 +34,11 @@ class AutomatedTestCases(unittest.TestCase):
             sleep(0.5)
 
     def test_circuit_normals(self):
-        led_yellow_nc = westinghouse.Output(13, normally_closed=True)
+        led_yellow_nc = radioraspi.Output(13, normally_closed=True)
         led_yellow_nc.on()
         self.assertEqual(led_yellow_nc.is_on, False)
 
-        led_white_no = westinghouse.Output(27, normally_closed=False)
+        led_white_no = radioraspi.Output(27, normally_closed=False)
         led_white_no.on()
         self.assertEqual(led_white_no.is_on, False)
 
@@ -48,40 +48,40 @@ class AutomatedTestCases(unittest.TestCase):
         self.assertEqual(led_yellow_nc.value, led_white_no.value)
 
     def test_mpd_is_alive(self):
-        response = westinghouse.mpd_is_alive()
+        response = radioraspi.mpd_is_alive()
         self.assertEqual(response, True)
         print("mpd is alive")
 
         run(["sudo", "killall", "mpd"])
         sleep(0.1)
-        response = westinghouse.mpd_is_alive()
+        response = radioraspi.mpd_is_alive()
         self.assertEqual(response, False)
 
         i = 0
         while response is False:
             i += 1
             print("waiting for mpd to restart", i)
-            response = westinghouse.mpd_is_alive()
+            response = radioraspi.mpd_is_alive()
             sleep(1)
 
         self.assertEqual(response, True)
 
     def test_mpd_get_status(self):
-        status = westinghouse.mpd_get_status()
+        status = radioraspi.mpd_get_status()
         self.assertEqual(isinstance(status, dict), True)
         print(status)
 
     def test_mpd_startup(self):
-        westinghouse.mpd_startup()
-        print(westinghouse.mpd_get_status())
+        radioraspi.mpd_startup()
+        print(radioraspi.mpd_get_status())
 
     def test_mpd_toggle_pause(self):
-        state1 = westinghouse.mpd_get_status()["state"]
-        westinghouse.mpd_toggle_pause()
-        state2 = westinghouse.mpd_get_status()["state"]
+        state1 = radioraspi.mpd_get_status()["state"]
+        radioraspi.mpd_toggle_pause()
+        state2 = radioraspi.mpd_get_status()["state"]
         self.assertNotEqual(state1, state2)
         sleep(1)
-        westinghouse.mpd_toggle_pause()
+        radioraspi.mpd_toggle_pause()
 
 
 if __name__ == "__main__":

@@ -1,26 +1,26 @@
 import unittest
 from time import sleep
 
-import westinghouse
+import radioraspi
 
 
 class InteractiveTestCases(unittest.TestCase):
     def test_play_pause(self):
-        button = westinghouse.Input(4)
+        button = radioraspi.Input(4)
         print("Press: play/pause GPIO 4")
         button.wait()
         self.assertEqual(True, True)
 
     def test_shuffle(self):
-        button = westinghouse.Input(17)
+        button = radioraspi.Input(17)
         print("Press: shuffle GPIO 17")
         button.wait()
         self.assertEqual(True, True)
 
     def test_volume(self):
         print("Testing volume")
-        clk = westinghouse.Input(23)
-        dt = westinghouse.Input(24)
+        clk = radioraspi.Input(23)
+        dt = radioraspi.Input(24)
         last_state = dt.value
         x = 0
         for i in range(1000):
@@ -39,8 +39,8 @@ class InteractiveTestCases(unittest.TestCase):
 
     def test_seek(self):
         print("test seek")
-        clk = westinghouse.Input(5)
-        dt = westinghouse.Input(6)
+        clk = radioraspi.Input(5)
+        dt = radioraspi.Input(6)
         x = 0
         last_state = dt.value
         while x < 10:

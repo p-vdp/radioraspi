@@ -1,5 +1,5 @@
 [Unit]
-Description=westinghouse
+Description=radioraspi
 Wants=dynamicswap.service
 
 StartLimitBurst=1
@@ -7,13 +7,13 @@ StartLimitIntervalSec=1000
 
 [Service]
 ExecStartPre=/bin/sleep 20
-ExecStart=/usr/bin/python /home/rpi/westinghouse/westinghouse.py
+ExecStart=/usr/bin/python /home/rpi/radioraspi/radioraspi.py
 Restart=always
 RestartSec=10
 
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=westinghouse
+SyslogIdentifier=radioraspi
 User=root
 Group=root
 

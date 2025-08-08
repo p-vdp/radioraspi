@@ -1,6 +1,7 @@
-# Westinghouse
+# radioraspi
 
-Custom GPIO actions for a radio restoration.
+Custom GPIO actions for a radio restoration built on a Raspberry Pi 5.
+
 ## Install
 
 Create Moode install on SD card using RPi Imager: https://www.raspberrypi.com/software/
@@ -17,14 +18,14 @@ ssh into Raspberry Pi
 
 use token
 
-`gh repo clone p-vdp/westinghouse`
+`gh repo clone p-vdp/radioraspi`
 
-`sudo bash ./westinghouse/install.sh`
+`sudo bash ./radioraspi/install.sh`
 
 ## Monitoring
 
-`sudo systemctl status westinghouse.service`
+`sudo systemctl status radioraspi.service`
 
 or
 
-`sudo journalctl -b -u westinghouse`
+`sudo journalctl -b -u radioraspi`

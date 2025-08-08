@@ -1,4 +1,4 @@
-sudo systemctl stop westinghouse.service
-sudo systemctl disable westinghouse.service
-sudo rm /usr/lib/systemd/system/westinghouse.service
+sudo systemctl stop radioraspi.service
+sudo systemctl disable radioraspi.service
+sudo rm /usr/lib/systemd/system/radioraspi.service
 sudo systemctl daemon-reload
