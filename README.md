@@ -12,13 +12,9 @@ ssh into Raspberry Pi
 
 `sudo apt upgrade`
 
-`sudo apt install gh`
+`sudo apt install git`
 
-`gh auth login`
-
-use token
-
-`gh repo clone p-vdp/radioraspi`
+`git clone p-vdp/radioraspi`
 
 `sudo bash ./radioraspi/install.sh`
 

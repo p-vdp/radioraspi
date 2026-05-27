@@ -1,6 +1,6 @@
-sudo chmod +x westinghouse.service
-sudo cp ./westinghouse.service /usr/lib/systemd/system/
+sudo chmod +x radioraspi.service
+sudo cp ./radioraspi.service /usr/lib/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable westinghouse.service
-sudo systemctl start westinghouse.service
-sudo systemctl status westinghouse.service
+sudo systemctl enable radioraspi.service
+sudo systemctl start radioraspi.service
+sudo systemctl status radioraspi.service
